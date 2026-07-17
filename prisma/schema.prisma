@@ -1,0 +1,179 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+// User model
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  firstName String?
+  lastName  String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Activity tracking for automatic deactivation
+  lastActiveAt      DateTime? // Last user activity timestamp
+  deactivatedAt     DateTime? // When account was deactivated
+  deactivationReason String?  // Reason for deactivation (e.g., "INACTIVITY_3_MONTHS")
+
+  // Password policy fields
+  passwordExpiresAt DateTime? // Password expiration date (3 months from creation/update)
+  previousPasswords String[]  // Array of hashed previous passwords (last 5)
+
+  // Relationships
+  userRoles UserRole[]
+  clientsCreated Client[]
+  loginLogs UserLoginLog[]
+  passwordHistory PasswordHistory[]
+
+  @@map("users")
+}
+
+// Role model
+model Role {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  description String?
+  isActive    Boolean @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  userRoles       UserRole[]
+  rolePermissions RolePermission[]
+
+  @@map("roles")
+}
+
+// Permission model
+model Permission {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  description String?
+  resource    String? // e.g., "users", "posts", "settings"
+  action      String? // e.g., "create", "read", "update", "delete"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  rolePermissions RolePermission[]
+
+  @@map("permissions")
+}
+
+// Many-to-many relationship between User and Role
+model UserRole {
+  id       String @id @default(cuid())
+  userId   String
+  roleId   String
+  assignedAt DateTime @default(now())
+  assignedBy String? // ID of the user who assigned this role
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId])
+  @@map("user_roles")
+}
+
+// Many-to-many relationship between Role and Permission
+model RolePermission {
+  id           String @id @default(cuid())
+  roleId       String
+  permissionId String
+  grantedAt    DateTime @default(now())
+  grantedBy    String? // ID of the user who granted this permission
+
+  // Relations
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+model Client {
+  id             String   @id @default(cuid())
+  nom            String
+  prenom         String
+  mail           String
+  phone          String?
+  adresse        String?
+  codePostal     String?
+  region         String?
+  pays           String?
+  dateAdhesion   DateTime
+  codeAgence     String?
+  createdById    String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  createdBy User @relation(fields: [createdById], references: [id], onDelete: Restrict)
+
+  @@map("clients")
+}
+
+// User login/logout logs
+model UserLoginLog {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  action      String   // "LOGIN" or "LOGOUT"
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+
+  @@map("user_login_logs")
+}
+
+// Password history for preventing reuse
+model PasswordHistory {
+  id        String   @id @default(cuid())
+  userId    String
+  password  String   // Hashed password
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@map("password_history")
+}
+
+// Fiche Joueur (Player Registration)
+model Player {
+  id                String   @id @default(cuid())
+  firstName         String
+  lastName          String
+  email             String   @unique
+  birthDate         DateTime
+  licenseNumber     String   @unique
+  category          String     // "U14", "Senior", etc.
+  bloodGroup        String     // "A+", "O-", etc.
+  height            Float?     // cm
+  weight            Float?     // kg
+  medicalCertUrl    String?    // Scan du certificat médical
+  idScanUrl         String?    // Scan CIN/Passeport
+  status            String   @default("PENDING") // PENDING, VALIDATED, REJECTED
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("players")
+}

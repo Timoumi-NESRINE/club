@@ -1,0 +1,63 @@
+{
+    "systemPermissionsDescription": "System permissions organized by resource",
+    "searchPlaceholder": "Search permissions...",
+    "allResources": "All Resources",
+    "permissionsCount": "permissions",
+    "created": "Created",
+    "noPermissionsFound": "No permissions found",
+    "adjustSearchCriteria": "Try adjusting your search criteria",
+    "runSeedScript": "Run the seed script to create sample permissions",
+    "resourceFilter": "Resource Filter",
+    "allPermissions": "All Permissions",
+    "found": "found",
+    "permissions": "Permissions",
+    "resources": {
+        "users": "Users",
+        "roles": "Roles",
+        "permissions": "Permissions",
+        "clients": "Clients",
+        "colors": "Colors",
+        "historyLogs": "History",
+        "General": "General"
+    },
+    "actions": {
+        "create": "Create",
+        "read": "View",
+        "update": "Edit",
+        "delete": "Delete"
+    },
+    "names": {
+        "users:create": "Create users",
+        "users:read": "View users",
+        "users:update": "Update users",
+        "users:delete": "Delete users",
+        "roles:create": "Create roles",
+        "roles:read": "View roles",
+        "roles:update": "Update roles",
+        "roles:delete": "Delete roles",
+        "permissions:read": "View permissions",
+        "clients:create": "Create clients",
+        "clients:read": "View clients",
+        "clients:update": "Update clients",
+        "clients:delete": "Delete clients",
+        "colors:read": "View colors",
+        "historyLogs:read": "View login history"
+    },
+    "descriptions": {
+        "users:create": "Ability to create new user accounts",
+        "users:read": "Ability to view user information and lists",
+        "users:update": "Ability to modify existing user accounts",
+        "users:delete": "Ability to delete user accounts",
+        "roles:create": "Ability to create new roles",
+        "roles:read": "Ability to view roles and their permissions",
+        "roles:update": "Ability to modify existing roles",
+        "roles:delete": "Ability to delete roles",
+        "permissions:read": "Ability to view system permissions",
+        "clients:create": "Ability to create new clients",
+        "clients:read": "Ability to view client information and lists",
+        "clients:update": "Ability to modify existing clients",
+        "clients:delete": "Ability to delete clients",
+        "colors:read": "Ability to view and customize theme colors",
+        "historyLogs:read": "Ability to view user login history"
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "users": "Utilisateurs",
+  "roles": "Rôles",
+  "permissions": "Permissions",
+  "userManagement": "Gestion des utilisateurs",
+  "roleManagement": "Gestion des rôles",
+  "remiseManagement": "Gestion des remises",
+  "historyLogs": "Historique des connexions"
+}

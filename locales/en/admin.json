@@ -1,0 +1,9 @@
+{
+  "users": "Users",
+  "roles": "Roles",
+  "permissions": "Permissions",
+  "userManagement": "User Management",
+  "roleManagement": "Role Management",
+  "historyLogs": "Connection history"
+ 
+}

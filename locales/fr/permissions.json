@@ -1,0 +1,64 @@
+{
+    "systemPermissionsDescription": "Permissions système organisées par ressource",
+    "searchPlaceholder": "Rechercher des permissions...",
+    "allResources": "Toutes les ressources",
+    "permissionsCount": "permissions",
+    "created": "Créé",
+    "noPermissionsFound": "Aucune permission trouvée",
+    "adjustSearchCriteria": "Essayez d'ajuster vos critères de recherche",
+    "runSeedScript": "Exécutez le script de seed pour créer des permissions d'exemple",
+    "resourceFilter": "Filtre par ressource",
+    "allPermissions": "Toutes les permissions",
+    "found": "trouvées",
+    "permissions": "Permissions",
+    "resources": {
+        "users": "Utilisateurs",
+        "roles": "Rôles",
+        "permissions": "Permissions",
+        "clients": "Clients",
+        "colors": "Couleurs",
+        "historyLogs": "Historique de connexions",
+        "General": "Général"
+    },
+    "actions": {
+        "create": "Créer",
+        "read": "Voir",
+        "update": "Modifier",
+        "delete": "Supprimer"
+    },
+    "names": {
+        "users:create": "Créer des utilisateurs",
+        "users:read": "Voir les utilisateurs",
+        "users:update": "Modifier les utilisateurs",
+        "users:delete": "Supprimer les utilisateurs",
+        "roles:create": "Créer des rôles",
+        "roles:read": "Voir les rôles",
+        "roles:update": "Modifier les rôles",
+        "roles:delete": "Supprimer les rôles",
+        "permissions:read": "Voir les permissions",
+        "clients:create": "Créer des clients",
+        "clients:read": "Voir les clients",
+        "clients:update": "Modifier les clients",
+        "clients:delete": "Supprimer les clients",
+        "colors:read": "Voir les couleurs",
+         "historyLogs:read": "Voir l'historique des connexions"
+       
+    },
+    "descriptions": {
+        "users:create": "Capacité de créer de nouveaux comptes utilisateur",
+        "users:read": "Capacité de voir les informations et listes d'utilisateurs",
+        "users:update": "Capacité de modifier les comptes utilisateur existants",
+        "users:delete": "Capacité de supprimer les comptes utilisateur",
+        "roles:create": "Capacité de créer de nouveaux rôles",
+        "roles:read": "Capacité de voir les rôles et leurs permissions",
+        "roles:update": "Capacité de modifier les rôles existants",
+        "roles:delete": "Capacité de supprimer les rôles",
+        "permissions:read": "Capacité de voir les permissions système",
+        "clients:create": "Capacité de créer de nouveaux clients",
+        "clients:read": "Capacité de voir les informations et listes de clients",
+        "clients:update": "Capacité de modifier les clients existants",
+        "clients:delete": "Capacité de supprimer les clients",
+        "colors:read": "Capacité de voir et personnaliser les couleurs du thème",
+        "historyLogs:read": "Capacité de voir l'historique des connexions des utilisateurs"
+    }
+}

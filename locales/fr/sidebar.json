@@ -1,0 +1,7 @@
+{
+  "menu": "Menu",
+  "dashboardDesc": "Vue d'ensemble",
+  "usersDesc": "Gestion des utilisateurs",
+  "rolesDesc": "Gestion des rôles",
+  "permissionsDesc": "Gestion des permissions"
+}

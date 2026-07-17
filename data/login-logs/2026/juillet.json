@@ -1,0 +1,12 @@
+{
+  "logs": [
+    {
+      "id": "1784327067975-4z2gi5z2m",
+      "userId": "cmnsrdic3004hvnroa2xqsax4",
+      "action": "LOGIN",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "createdAt": "2026-07-17T22:24:27.975Z"
+    }
+  ]
+}

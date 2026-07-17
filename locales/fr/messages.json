@@ -1,0 +1,7 @@
+{
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet élément ?",
+    "itemCreated": "Élément créé avec succès",
+    "itemUpdated": "Élément mis à jour avec succès",
+    "itemDeleted": "Élément supprimé avec succès",
+    "operationFailed": "Opération échouée"
+}

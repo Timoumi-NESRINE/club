@@ -1,0 +1,7 @@
+{
+  "menu": "Menu",
+  "dashboardDesc": "Overview",
+  "usersDesc": "User management",
+  "rolesDesc": "Role management",
+  "permissionsDesc": "Permission management"
+}

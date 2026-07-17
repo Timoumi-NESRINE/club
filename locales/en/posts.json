@@ -1,0 +1,9 @@
+{
+    "deleteSuccess": "Post deleted successfully",
+    "createSuccess": "Post created successfully",
+    "updateSuccess": "Post updated successfully",
+    "title": "Title",
+    "content": "Content",
+    "author": "Author",
+    "publishedAt": "Published At"
+}
