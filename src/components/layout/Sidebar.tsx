@@ -140,6 +140,58 @@ export default function Sidebar({ sidebarOpen, sidebarCollapsed, setSidebarOpen 
 
     }] : []),
 
+    ...(canAccessUsers() ? [{
+
+      name: 'AI Command Center',
+
+      href: '/admin/ai-command-center',
+
+      icon: 'Sparkles' as IconName,
+
+      description: 'Agents IA, Leads & Automation'
+
+    }] : []),
+
+    ...(canAccessUsers() ? [{
+
+      name: '↳ Agents Status',
+
+      href: '/admin/ai-command-center/agents',
+
+      icon: 'Activity' as IconName,
+
+    }] : []),
+
+    ...(canAccessUsers() ? [{
+
+      name: '↳ Leads & Pipeline',
+
+      href: '/admin/ai-command-center/leads',
+
+      icon: 'TrendingUp' as IconName,
+
+    }] : []),
+
+    ...(canAccessUsers() ? [{
+
+      name: '↳ Propositions',
+
+      href: '/admin/ai-command-center/proposals',
+
+      icon: 'Mail' as IconName,
+
+    }] : []),
+
+    ...(canAccessUsers() ? [{
+
+      name: '↳ Marketing & Blog',
+
+      href: '/admin/ai-command-center/marketing',
+
+      icon: 'Megaphone' as IconName,
+
+    }] : []),
+
     
 
   ]

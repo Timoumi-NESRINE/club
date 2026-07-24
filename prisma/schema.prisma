@@ -41,6 +41,12 @@ model User {
   clientsCreated Client[]
   loginLogs UserLoginLog[]
   passwordHistory PasswordHistory[]
+  leadsAssigned Lead[] @relation("LeadAssignee")
+  dealsCreated Deal[] @relation("DealCreator")
+  followUpsCreated FollowUp[] @relation("FollowUpCreator")
+  nurturingCreated NurturingSequence[] @relation("NurturingCreator")
+  alertsResolved SystemAlert[] @relation("AlertResolver")
+  campaignsCreated MarketingCampaign[] @relation("CampaignCreator")
 
   @@map("users")
 }
@@ -171,9 +177,157 @@ model Player {
   medicalCertUrl    String?    // Scan du certificat médical
   idScanUrl         String?    // Scan CIN/Passeport
   status            String   @default("PENDING") // PENDING, VALIDATED, REJECTED
-  
+
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
   @@map("players")
+}
+
+// Lead Management
+model Lead {
+  id                String   @id @default(cuid())
+  name              String
+  email             String
+  company           String?
+  phone             String?
+  address           String?
+  website           String?
+  linkedinUrl       String?
+  source            String   // "email_inbound", "google_maps", "hubspot_form", "linkedin", "manual"
+  status            String   @default("NEW") // NEW, CONTACTED, QUALIFIED, PROPOSAL, WON, LOST, NURTURING
+  icpScore          Int?     // ICP Score 1-10
+  companyTarget     String?  // Detected company target
+  serviceLine       String?  // Detected service line
+  message           String?  @db.Text
+  notes             String?  @db.Text
+  assignedTo        String?  // User ID
+  lastContactDate   DateTime?
+  nextFollowUpDate  DateTime?
+  metadata          Json?    // Additional data
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  assignedToUser    User?    @relation("LeadAssignee", fields: [assignedTo], references: [id])
+  deals             Deal[]
+  followUps         FollowUp[]
+  nurturingSequence NurturingSequence[]
+
+  @@map("leads")
+}
+
+// Sales Pipeline / Deals
+model Deal {
+  id                String   @id @default(cuid())
+  leadId            String
+  lead              Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  title             String
+  value             Float?
+  stage             String   @default("PROSPECT") // PROSPECT, QUALIFIED, PROPOSAL, NEGOTIATION, WON, LOST
+  probability       Int?     // 0-100
+  expectedCloseDate DateTime?
+  actualCloseDate   DateTime?
+  proposalContent   String?  @db.Text
+  proposalSentAt    DateTime?
+  createdBy         String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  creator           User     @relation("DealCreator", fields: [createdBy], references: [id])
+
+  @@map("deals")
+}
+
+// Marketing Campaigns
+model MarketingCampaign {
+  id                String   @id @default(cuid())
+  name              String
+  type              String   // "social_media", "email", "blog", "linkedin"
+  platform          String?  // "facebook", "instagram", "linkedin", "email"
+  status            String   @default("DRAFT") // DRAFT, SCHEDULED, PUBLISHED, ARCHIVED
+  content           String   @db.Text
+  imageUrl          String?
+  scheduledFor      DateTime?
+  publishedAt       DateTime?
+  createdBy         String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  creator           User     @relation("CampaignCreator", fields: [createdBy], references: [id])
+
+  @@map("marketing_campaigns")
+}
+
+// Follow-ups / Relances
+model FollowUp {
+  id                String   @id @default(cuid())
+  leadId            String
+  lead              Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  type              String   // "J+1", "J+3", "J+7", "MANUAL"
+  status            String   @default("PENDING") // PENDING, SENT, COMPLETED, SKIPPED
+  scheduledFor      DateTime
+  sentAt            DateTime?
+  content           String   @db.Text
+  channel           String   // "email", "whatsapp", "linkedin"
+  notes             String?  @db.Text
+  createdBy         String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  creator           User     @relation("FollowUpCreator", fields: [createdBy], references: [id])
+
+  @@map("follow_ups")
+}
+
+// Nurturing Sequences
+model NurturingSequence {
+  id                String   @id @default(cuid())
+  leadId            String
+  lead              Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  sequenceType      String   // "J+30", "J+60", "J+90", "J+120"
+  status            String   @default("PENDING") // PENDING, ACTIVE, COMPLETED, PAUSED
+  scheduledFor      DateTime
+  sentAt            DateTime?
+  content           String   @db.Text
+  serviceLine       String?
+  createdBy         String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  creator           User     @relation("NurturingCreator", fields: [createdBy], references: [id])
+
+  @@map("nurturing_sequences")
+}
+
+// System Monitoring / Alerts
+model SystemAlert {
+  id                String   @id @default(cuid())
+  type              String   // "ERROR", "WARNING", "INFO"
+  source            String   // "email_agent", "lead_generation", "marketing", "sales", "system"
+  message           String   @db.Text
+  severity          String   // "LOW", "MEDIUM", "HIGH", "CRITICAL"
+  status            String   @default("OPEN") // OPEN, RESOLVED, IGNORED
+  metadata          Json?
+  resolvedAt        DateTime?
+  resolvedBy        String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  resolver          User?    @relation("AlertResolver", fields: [resolvedBy], references: [id])
+
+  @@map("system_alerts")
+}
+
+// KPIs / Metrics
+model KpiMetric {
+  id                String   @id @default(cuid())
+  metricName        String   // "total_leads", "qualified_leads", "conversion_rate", "roi"
+  metricValue       Float
+  metricDate        DateTime
+  period            String   // "daily", "weekly", "monthly"
+  metadata          Json?
+  createdAt         DateTime @default(now())
+
+  @@unique([metricName, metricDate, period])
+  @@map("kpi_metrics")
 }
