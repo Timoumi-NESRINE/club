@@ -1,0 +1,52 @@
+{
+  "logs": [
+    {
+      "id": "1785836644736-dajg1i18t",
+      "userId": "cmnsvyplp0021vnhw4neg3q8s",
+      "action": "LOGOUT",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0",
+      "createdAt": "2026-08-04T09:44:04.736Z"
+    },
+    {
+      "id": "1785836643647-d7zbwpcbj",
+      "userId": "cmnsvyplp0021vnhw4neg3q8s",
+      "action": "LOGOUT",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0",
+      "createdAt": "2026-08-04T09:44:03.647Z"
+    },
+    {
+      "id": "1785836141172-v0ac2p433",
+      "userId": "cmnsrdic3004hvnroa2xqsax4",
+      "action": "LOGIN",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "createdAt": "2026-08-04T09:35:41.172Z"
+    },
+    {
+      "id": "1785835968878-paytgydqc",
+      "userId": "cmnsrdic3004hvnroa2xqsax4",
+      "action": "LOGOUT",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "createdAt": "2026-08-04T09:32:48.878Z"
+    },
+    {
+      "id": "1785832938246-ejwx6ygu3",
+      "userId": "cmnsrdic3004hvnroa2xqsax4",
+      "action": "LOGIN",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+      "createdAt": "2026-08-04T08:42:18.246Z"
+    },
+    {
+      "id": "1785832825877-n99ivxexe",
+      "userId": "cmnsvyplp0021vnhw4neg3q8s",
+      "action": "LOGIN",
+      "ipAddress": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0",
+      "createdAt": "2026-08-04T08:40:25.877Z"
+    }
+  ]
+}

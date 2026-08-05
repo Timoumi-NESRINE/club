@@ -6,7 +6,7 @@ import Link from 'next/link';
 // Config Webhooks n8n
 // ═══════════════════════════════════════════════
 const SIM_WEBHOOK    = '/api/n8n/marketing-publish';
-const BLOG_WEBHOOK   = '/api/n8n/dashboard-blog-plan-get';
+const BLOG_WEBHOOK   = '/api/n8n/blog-drafts-direct';
 const BLOG_PUBLISH   = '/api/n8n/blog-publish';
 const MARK_POSTED    = '/api/n8n/mark-draft-posted';
 const IMGBB_KEY      = 'e4b64f3ef2712a9ed60e44d1515b8e63';
@@ -65,6 +65,8 @@ export default function MarketingPage() {
   const [blogEditedExcerpt, setBlogEditedExcerpt] = useState<Record<number, string>>({});
   const [blogImgUrls, setBlogImgUrls] = useState<Record<number, string>>({});
   const [blogItemStatus, setBlogItemStatus] = useState<Record<number, { msg: string; color: string }>>({});
+  const [generating, setGenerating] = useState(false);
+  const [generateStatus, setGenerateStatus] = useState('');
   const [rejectedBlogs, setRejectedBlogs] = useState<Set<string>>(() => {
     try { return new Set(JSON.parse(localStorage.getItem('rejected_blogs') || '[]')); } catch { return new Set(); }
   });
@@ -107,6 +109,26 @@ export default function MarketingPage() {
       }
     } catch {
       setBlogStatus('Blog agent hors ligne');
+    }
+  }
+
+  // ── Generate blogs manually ──
+  async function generateBlogs() {
+    setGenerating(true);
+    setGenerateStatus('⏳ Génération en cours (Claude ~60s)...');
+    try {
+      const res = await fetch(BLOG_WEBHOOK, { method: 'POST' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      setGenerateStatus('✓ Génération lancée — chargement dans 60s...');
+      // Wait 60s then reload
+      setTimeout(() => {
+        setGenerateStatus('');
+        loadBlogDrafts();
+      }, 60000);
+    } catch (e: any) {
+      setGenerateStatus('✗ Erreur: ' + e.message);
+    } finally {
+      setGenerating(false);
     }
   }
 
@@ -446,6 +468,22 @@ export default function MarketingPage() {
                   {blogData.blogs.filter((_, i) => !rejectedBlogs.has(`${blogData.weekId || ''}_${blogData.blogs![i].company || i}`)).length} EN ATTENTE
                 </span>
               )}
+              <div className="ml-auto flex items-center gap-3">
+                {generateStatus && <span className="text-[10px] font-mono text-gray-500">{generateStatus}</span>}
+                <button
+                  onClick={generateBlogs}
+                  disabled={generating}
+                  className="px-3 py-1.5 text-[9px] font-black uppercase tracking-widest border border-purple-300 text-purple-700 bg-purple-50 hover:bg-purple-100 rounded-lg transition-all disabled:opacity-50"
+                >
+                  {generating ? '⏳ EN COURS...' : '[ ▶ GÉNÉRER BLOGS ]'}
+                </button>
+                <button
+                  onClick={loadBlogDrafts}
+                  className="px-3 py-1.5 text-[9px] font-black uppercase tracking-widest border border-gray-200 text-gray-500 hover:bg-gray-50 rounded-lg transition-all"
+                >
+                  [ ↻ REFRESH ]
+                </button>
+              </div>
             </div>
 
             {blogStatus && (

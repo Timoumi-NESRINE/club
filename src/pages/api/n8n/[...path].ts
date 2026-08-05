@@ -45,8 +45,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (contentType && contentType.includes('application/json')) {
-      const data = await response.json();
-      return res.status(response.status).json(data);
+      // Read as text first to handle empty bodies (n8n can return 200 with empty body)
+      const text = await response.text();
+      if (!text || !text.trim()) {
+        return res.status(response.status).send('');
+      }
+      try {
+        const data = JSON.parse(text);
+        return res.status(response.status).json(data);
+      } catch {
+        // Not valid JSON despite content-type header — send as-is
+        return res.status(response.status).send(text);
+      }
     } else {
       const text = await response.text();
       return res.status(response.status).send(text);
